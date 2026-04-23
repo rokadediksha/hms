@@ -2,10 +2,9 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'nodejs'  // Must match the NodeJS installation name in Jenkins Global Tools
+        nodejs 'nodejs'
     }
 
-    // Inject RDS credentials stored as Jenkins Secret Text credentials
     environment {
         RDS_HOST     = credentials('RDS_HOST')
         RDS_USER     = credentials('RDS_USER')
@@ -17,7 +16,6 @@ pipeline {
 
     stages {
 
-        // ── 1. CLONE ──────────────────────────────────────────────────────────
         stage('Clone Repository') {
             steps {
                 git branch: 'main',
@@ -26,7 +24,6 @@ pipeline {
             }
         }
 
-        // ── 2. INSTALL DEPENDENCIES ───────────────────────────────────────────
         stage('Install Backend Dependencies') {
             steps {
                 dir('backend') {
@@ -36,7 +33,6 @@ pipeline {
             }
         }
 
-        // ── 3. TEST DB CONNECTION ─────────────────────────────────────────────
         stage('Test RDS Connection') {
             steps {
                 dir('backend') {
@@ -61,7 +57,6 @@ pipeline {
             }
         }
 
-        // ── 4. RUN TESTS ──────────────────────────────────────────────────────
         stage('Run Tests') {
             steps {
                 dir('backend') {
@@ -70,15 +65,12 @@ pipeline {
             }
         }
 
-        // ── 5. BUILD FRONTEND ─────────────────────────────────────────────────
         stage('Build Frontend') {
             steps {
                 echo "✅ Static frontend is ready (no build step needed)"
-                // If you switch to React: sh 'cd frontend && npm install && npm run build'
             }
         }
 
-        // ── 6. DEPLOY ─────────────────────────────────────────────────────────
         stage('Deploy') {
             steps {
                 sh '''
@@ -88,21 +80,19 @@ pipeline {
 
                 echo "🚀 Starting HMS backend server..."
                 cd backend
-                nohup node server.js > /var/log/hms-backend.log 2>&1 &
+                nohup node server.js > /tmp/hms-backend.log 2>&1 &
 
                 echo "⏳ Waiting for server to start..."
                 sleep 3
 
-                # Health check
                 curl -sf http://localhost:3000/health && echo "✅ Server is running!" || {
                     echo "❌ Health check failed"
-                    cat /var/log/hms-backend.log
+                    cat /tmp/hms-backend.log
                     exit 1
                 }
                 '''
             }
         }
-
     }
 
     post {
@@ -111,9 +101,9 @@ pipeline {
             ════════════════════════════════════════
             ✅ DEPLOYMENT SUCCESSFUL
             ════════════════════════════════════════
-            Frontend : http://<server-ip>/frontend/index.html
-            API      : http://<server-ip>:3000/patients
-            Health   : http://<server-ip>:3000/health
+            Frontend : http://107.21.20.141/
+            API      : http://107.21.20.141:3000/patients
+            Health   : http://107.21.20.141:3000/health
             '''
         }
         failure {
@@ -125,7 +115,7 @@ pipeline {
             '''
         }
         always {
-            echo "📋 Pipeline finished. Check /var/log/hms-backend.log for runtime logs."
+            echo "📋 Pipeline finished. Check /tmp/hms-backend.log for runtime logs."
         }
     }
 }
