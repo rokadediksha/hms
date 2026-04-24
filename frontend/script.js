@@ -1,4 +1,4 @@
-const API = 'http://localhost:3000';
+const API = 'http://3.88.71.160:3000';
 
 // ─── TOAST ──────────────────────────────────────────────
 function showToast(msg, type = 'success') {
