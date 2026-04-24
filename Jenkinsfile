@@ -23,12 +23,14 @@ pipeline {
                 echo "✅ Code cloned successfully"
             }
         }
-
         stage('Install Backend Dependencies') {
-            steps {
-                dir('backend') {
-                    sh 'npm install'
-                    echo "✅ Dependencies installed"
+    steps {
+        dir('backend') {
+            sh 'rm -rf node_modules package-lock.json'
+            sh 'npm install'
+            echo "✅ Dependencies installed"
+
+        
                 }
             }
         }
