@@ -181,3 +181,18 @@ git push → GitHub → Webhook → Jenkins
 
 - **Never commit `.env`** — it's in `.gitignore`
 - RDS credentials are injected by Jenkins at runtime
+
+
+<img width="1920" height="1020" alt="Screenshot 2026-04-24 152311" src="https://github.com/user-attachments/assets/9cd4c554-6ec3-446f-b448-e3856f8d5058" />
+
+<img width="1920" height="1020" alt="Screenshot 2026-04-24 152340" src="https://github.com/user-attachments/assets/8c4372bf-04c9-48e5-8edf-070587fcb779" />
+
+<img width="1920" height="1020" alt="Screenshot 2026-04-24 152402" src="https://github.com/user-attachments/assets/04e0b670-e686-4121-9032-8906b4c4fcc5" />
+
+<img width="1920" height="1020" alt="Screenshot 2026-04-24 152427" src="https://github.com/user-attachments/assets/93125351-39ad-4813-8d34-0c7a2700687d" />
+
+<img width="1920" height="1020" alt="Screenshot 2026-04-24 152053" src="https://github.com/user-attachments/assets/49812413-e61c-41ff-bb04-bef11f2d27cf" />
+
+<img width="1920" height="1020" alt="Screenshot 2026-04-23 180342" src="https://github.com/user-attachments/assets/b5901966-0a43-4406-9f94-1a30429bb020" />
+
+<img width="1902" height="583" alt="Screenshot 2026-04-24 151459" src="https://github.com/user-attachments/assets/83e236ca-ebec-4996-b4dd-787d54a46223" />
